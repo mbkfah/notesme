@@ -1,0 +1,26 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./notes.db"
+}
+model User {
+  id String @id @unique @default(cuid())
+  email String
+  password String
+  notes Notes []
+
+}
+
+model Notes {
+  id String @id @unique @default(cuid())
+  body String
+  color String
+  userId String
+  user User @relation(references: [id], fields: [userId])
+}
